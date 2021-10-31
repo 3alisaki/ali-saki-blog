@@ -1,6 +1,5 @@
 // custom typefaces
-import "typeface-montserrat"
-import "typeface-merriweather"
+import "vazir-font/dist/font-face.css"
 // normalize CSS across browsers
 import "normalize.css"
 // custom CSS styles
