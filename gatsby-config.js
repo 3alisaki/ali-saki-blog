@@ -5,6 +5,7 @@ module.exports = {
     siteUrl: `https://alipress.ir/`,
   },
   plugins: [
+    `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
