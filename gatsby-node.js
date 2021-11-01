@@ -63,7 +63,7 @@ module.exports = {
     const { createNodeField } = actions
 
     if (node.internal.type === `MarkdownRemark`) {
-      const value = createFilePath({ node, getNode })
+      const value = '/posts' + createFilePath({ node, getNode })
 
       createNodeField({
         name: `slug`,
