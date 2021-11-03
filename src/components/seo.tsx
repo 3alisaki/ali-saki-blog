@@ -33,7 +33,7 @@ const Seo = ({ description = ``, lang = `en`, meta = [], title }: SeoProps) => {
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
 
-  const dafaultMeta: Record<string, string>[] = [
+  const defaultMeta: Record<string, string>[] = [
     {
       name: `description`,
       content: metaDescription,
@@ -71,7 +71,7 @@ const Seo = ({ description = ``, lang = `en`, meta = [], title }: SeoProps) => {
       }}
       title={title}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
-      meta={dafaultMeta.concat(meta)}
+      meta={defaultMeta.concat(meta)}
     />
   )
 }
