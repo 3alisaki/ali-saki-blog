@@ -1,26 +1,31 @@
 import * as React from "react"
-import { Link, graphql, PageProps } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import PostsList from "../components/posts-list"
 
-export default function HomeIndex(pageProps: PageProps<PostsQueryData>) {
+export default function CategoryIndex(
+  pageProps: PageProps<PostsQueryData, { category: string }>
+) {
   const { data } = pageProps
 
   return (
     <Layout pageProps={pageProps}>
-      <Seo title="همه پست ها" />
+      <Seo title={`پست های دسته "${pageProps.pageContext.category}"`} />
+      <h1>پست های دسته "{pageProps.pageContext.category}"</h1>
       <PostsList postsQuery={data} />
     </Layout>
   )
 }
 
 export const pageQuery = graphql`
-  query {
+  query PostsByCategory($category: [String]!) {
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { template: { ne: "page" } } }
+      filter: {
+        frontmatter: { categories: { in: $category }, template: { ne: "page" } }
+      }
     ) {
       nodes {
         excerpt(truncate: true, pruneLength: 160)

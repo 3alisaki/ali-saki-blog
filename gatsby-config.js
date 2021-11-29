@@ -1,9 +1,11 @@
+const config = require("./config.json")
+
 /** @type {import('gatsby').GatsbyConfig} */
 module.exports = {
   siteMetadata: {
-    title: "عین",
-    description: "وبلاگ شخصی علی ساکی.",
-    siteUrl: "https://alipress.ir/",
+    title: config.site.name,
+    description: config.site.description,
+    siteUrl: config.site.url,
   },
   plugins: [
     "gatsby-plugin-jss",
@@ -11,8 +13,22 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/content/blog`,
-        name: "blog",
+        name: "pages",
+        path: `${__dirname}/content/pages`,
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "posts",
+        path: `${__dirname}/content/posts`,
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "thumbnails",
+        path: `${__dirname}/content/thumbnails`,
       },
     },
     {
@@ -23,13 +39,14 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-transformer-remark",
+      resolve: "gatsby-plugin-mdx",
       options: {
-        plugins: [
+        extensions: [`.md`, `.mdx`],
+        gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 630,
+              maxWidth: 800,
             },
           },
           {
@@ -69,8 +86,8 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.nodes.map(node => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
@@ -82,15 +99,13 @@ module.exports = {
             },
             query: `
               {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
+                allMdx(
+                  sort: { fields: [frontmatter___date], order: DESC },
                 ) {
                   nodes {
-                    excerpt
+                    excerpt(truncate: true, pruneLength: 160)
                     html
-                    fields {
-                      slug
-                    }
+                    fields { slug }
                     frontmatter {
                       title
                       date
@@ -100,7 +115,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "فید RSS وبلاگ علی ساکی",
+            title: `فید RSS ${config.site.longName}`,
           },
         ],
       },
@@ -108,19 +123,21 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        name: "وبلاگ علی ساکی",
-        short_name: "وبلاگ علی ساکی",
+        short_name: config.site.title,
+        name: config.site.longName,
         start_url: "/",
-        background_color: "#ffffff",
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: '#663399',
-        display: "minimal-ui",
+        display: "standalone",
         icon: "src/images/gatsby-icon.png",
       },
     },
+    {
+      resolve: "gatsby-plugin-nprogress",
+      options: {
+        showSpinner: false,
+      },
+    },
+    "gatsby-plugin-sass",
     "gatsby-plugin-react-helmet",
-    "gatsby-plugin-nprogress",
     "gatsby-plugin-offline",
   ],
 }

@@ -7,13 +7,16 @@ module.exports = {
     const { createPage } = actions
 
     // Define a template for blog post
-    const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
+    const postTemplate = path.resolve(`./src/templates/post.tsx`)
+    const pageTemplate = path.resolve(`./src/templates/page.tsx`)
+    const categoryTemplate = path.resolve(`./src/templates/category.tsx`)
+    const tagTemplate = path.resolve(`./src/templates/tag.tsx`)
 
     // Get all markdown blog posts sorted by date
     const result = await graphql(
       `
         {
-          allMarkdownRemark(
+          allMdx(
             sort: { fields: [frontmatter___date], order: ASC }
             limit: 1000
           ) {
@@ -21,6 +24,11 @@ module.exports = {
               id
               fields {
                 slug
+              }
+              frontmatter {
+                categories
+                tags
+                template
               }
             }
           }
@@ -36,48 +44,71 @@ module.exports = {
       return
     }
 
-    const posts = result.data.allMarkdownRemark.nodes
+    const posts = result.data.allMdx.nodes
 
-    // Create blog posts pages
-    // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-    // `context` is available in the template as a prop and as a variable in GraphQL
+    const categories = new Set()
+    const tags = new Set()
 
-    if (posts.length > 0) {
-      posts.forEach((post, index) => {
-        const previousPostId = index === 0 ? null : posts[index - 1].id
-        const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
-
-        createPage({
-          path: post.fields.slug,
-          component: blogPost,
-          context: {
-            id: post.id,
-            previousPostId,
-            nextPostId,
-          },
+    posts.forEach(post => {
+      if (post.frontmatter.categories) {
+        post.frontmatter.categories.forEach(category => {
+          categories.add(category)
         })
+      }
+
+      if (post.frontmatter.tags) {
+        post.frontmatter.tags.forEach(tag => {
+          tags.add(tag)
+        })
+      }
+
+      createPage({
+        path: post.fields.slug,
+        component:
+          post.frontmatter.template === "page" ? pageTemplate : postTemplate,
+        context: {
+          id: post.id,
+        },
       })
-    }
+    })
+
+    categories.forEach(category => {
+      createPage({
+        path: `/categories/${category}/`,
+        component: categoryTemplate,
+        context: {
+          category,
+        },
+      })
+    })
+
+    tags.forEach(tag => {
+      createPage({
+        path: `/tags/${tag}/`,
+        component: tagTemplate,
+        context: {
+          tag,
+        },
+      })
+    })
   },
   onCreateNode: ({ node, actions, getNode }) => {
     const { createNodeField } = actions
 
-    if (node.internal.type === `MarkdownRemark`) {
-      const value = '/posts' + createFilePath({ node, getNode })
-
+    if (node.internal.type === "Mdx") {
       createNodeField({
-        name: `slug`,
         node,
-        value,
+        name: "slug",
+        value: createFilePath({ node, getNode }),
       })
     }
   },
   onCreateBabelConfig: ({ actions }) => {
     actions.setBabelPreset({
-      name: 'babel-preset-gatsby',
+      name: "babel-preset-gatsby",
       options: {
-        reactRuntime: 'automatic',
+        reactRuntime: "automatic",
       },
     })
-  }
+  },
 }

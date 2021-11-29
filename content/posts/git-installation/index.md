@@ -1,7 +1,7 @@
 ---
 title: نصب Git
 date: "2021-11-02T11:30Z"
-description: "برای نصب آخرین نسخه Git باید به سایت ..."
+featuredImage: ../../thumbnails/git.png
 ---
 
 ## نصب Git در ویندوز (Windows)
@@ -78,7 +78,7 @@ $ brew install git
 
 برای اینکه نتیجه عملمون رو ببینیم هم دستور زیر رو بزنید توی ترمینال:
 
-```bash
+```bash{outputLines: 2}{promptUser: root}
 $ git --version
 git version 2.26.1
 ```

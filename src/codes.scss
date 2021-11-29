@@ -1,0 +1,250 @@
+/* Code */
+
+code {
+  font-size: 13px;
+}
+
+code[class*="language-"],
+pre[class*="language-"],
+pre > code {
+  font-family: Consolas, Monaco, "Andale Mono", monospace;
+  color: #b3b9c5;
+  font-size: 13px;
+  direction: ltr;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 22px;
+  font-weight: 400;
+  tab-size: 2;
+  hyphens: none;
+  border-radius: 4px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Code blocks */
+
+pre {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 1.5rem;
+  overflow: auto;
+  background-color: #333;
+  border: 0;
+  box-shadow: 2px 4px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+
+  > code {
+    flex: 1;
+  }
+}
+
+code[class*="language-css"],
+code[class*="language-scss"],
+code[class*="language-less"],
+code[class*="language-sass"] {
+  color: #cc99cc;
+}
+
+pre::selection,
+code::selection {
+  text-shadow: none;
+  color: inherit;
+  background: rgba(150, 150, 150, 0.3) !important;
+}
+
+@media (min-width: 620px) {
+  code,
+  code[class*="language-"],
+  pre[class*="language-"],
+  pre code {
+    font-size: 14px;
+  }
+}
+
+/* Inline code */
+
+:not(pre) > code {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 5px;
+  border: none;
+  font-family: Consolas, Monaco, "Andale Mono", monospace;
+  border-radius: 4px;
+
+  @media (prefers-color-scheme: light) {
+    color: #111111;
+    background-color: #f0f0f0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: #b3b9c5;
+    background-color: #373737;
+  }
+}
+
+/* Line numbers */
+
+.line-numbers {
+  counter-reset: linenumber;
+
+  .line-numbers-rows {
+    pointer-events: none;
+    border-right: 1px solid #777c85;
+    margin-right: 1rem;
+    user-select: none;
+    flex: 0;
+
+    > span {
+      display: block;
+      counter-increment: linenumber;
+
+      &:before {
+        content: counter(linenumber);
+        color: #777c85;
+        display: block;
+        padding-right: 1rem;
+        text-align: right;
+      }
+    }
+  }
+}
+
+/* Line highlight */
+
+.gatsby-highlight-code-line {
+  display: block;
+  height: 22px;
+  color: #fff;
+
+  &::before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: rgba(201, 167, 255, 0.12);
+  }
+}
+
+/* Keyboard input */
+
+kbd {
+  border-radius: 3px;
+  display: inline-block;
+  font-family: Consolas, Monaco, "Andale Mono", monospace;
+  line-height: 1.4;
+  margin: 0 0.1em;
+  padding: 0.1em 0.6em;
+  font-size: 0.8em;
+
+  @media (prefers-color-scheme: light) {
+    background-color: #f7f7f7;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    color: #333;
+    text-shadow: 0 1px 0 white;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #292929;
+    border: 1px solid rgba(215, 215, 215, 0.3);
+    box-shadow: 0 1px 0 rgba(215, 215, 215, 0.2), 0 0 0 2px #202020 inset;
+    color: #fff;
+    text-shadow: 0 1px 0 #202020;
+  }
+}
+
+/* Syntax Highlighting */
+
+.token {
+  &.doctype {
+    background: #000000;
+    color: #fff;
+  }
+
+  &.comment,
+  &.prolog,
+  &.cdata {
+    color: #777c85;
+  }
+
+  &.namespace {
+    opacity: 0.7;
+  }
+
+  &.string,
+  &.attr-value {
+    color: #92d192;
+  }
+
+  &.punctuation {
+    color: #d5d8df;
+  }
+
+  &.operator {
+    color: #ac8d58;
+  }
+
+  &.variable {
+    color: #f2777a;
+  }
+
+  &.property {
+    color: #abb2bf;
+  }
+
+  &.entity,
+  &.url,
+  &.symbol,
+  &.number,
+  &.boolean,
+  &.constant,
+  &.regex,
+  &.inserted,
+  .language-autohotkey &.selector {
+    color: #fca369;
+  }
+
+  &.delimiter {
+    background: black;
+    color: white;
+    padding: 1px 2px;
+  }
+
+  &.keyword {
+    color: #ffeead;
+  }
+
+  &.selector,
+  &.attr-name {
+    color: #ffd479;
+  }
+
+  &.atrule,
+  &.function {
+    color: #62cfcf;
+  }
+
+  .language-php &.function {
+    color: white;
+  }
+
+  &.class-name {
+    color: #e1a6f2;
+  }
+
+  &.deleted,
+  .language-autohotkey &.tag {
+    color: #f2777a;
+  }
+
+  &.tag {
+    color: #6ab0f3;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+}

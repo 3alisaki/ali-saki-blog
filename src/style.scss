@@ -1,0 +1,48 @@
+:root {
+  direction: rtl;
+  font-size: 16px;
+}
+
+body {
+  font-family: "Vazir", "Segoe UI", Tahoma, sans-serif;
+}
+
+a {
+  color: #6fb451;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* @import "~prism-themes/themes/prism-darcula.css"; */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #404040;
+  }
+
+  ::selection {
+    background-color: #fff15a;
+    color: #111;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #202020;
+    color: #b3b9c5;
+  }
+
+  ::selection {
+    background-color: #6fb451;
+    color: #fff;
+  }
+}

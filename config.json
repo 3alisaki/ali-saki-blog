@@ -1,0 +1,20 @@
+{
+  "site": {
+    "name": "عین",
+    "longName": "وبلاگ شخصی علی ساکی.",
+    "description": "وبلاگ شخصی علی ساکی.",
+    "url": "https://alipress.ir/"
+  },
+  "menus": {
+    "footer": [
+      {
+        "name": "درباره من",
+        "to": "/about-me/"
+      },
+      {
+        "name": "سیاست حفظ حریم خصوصی",
+        "to": "/privacy-policy/"
+      }
+    ]
+  }
+}

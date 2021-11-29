@@ -1,26 +1,29 @@
 import * as React from "react"
-import { Link, graphql, PageProps } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import PostsList from "../components/posts-list"
 
-export default function HomeIndex(pageProps: PageProps<PostsQueryData>) {
+export default function TagIndex(
+  pageProps: PageProps<PostsQueryData, { tag: string }>
+) {
   const { data } = pageProps
 
   return (
     <Layout pageProps={pageProps}>
-      <Seo title="همه پست ها" />
+      <Seo title={`پست هایی با برچسب "${pageProps.pageContext.tag}"`} />
+      <h1>پست هایی با برچسب "{pageProps.pageContext.tag}"</h1>
       <PostsList postsQuery={data} />
     </Layout>
   )
 }
 
 export const pageQuery = graphql`
-  query {
+  query PostsByTag($tag: [String]!) {
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { template: { ne: "page" } } }
+      filter: { frontmatter: { tags: { in: $tag }, template: { ne: "page" } } }
     ) {
       nodes {
         excerpt(truncate: true, pruneLength: 160)

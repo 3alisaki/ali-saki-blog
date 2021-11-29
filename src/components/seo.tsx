@@ -13,10 +13,15 @@ interface SeoProps {
   description?: string
   lang?: string
   meta?: Record<string, string>[]
-  title: string
+  title?: string
 }
 
-const Seo = ({ description = ``, lang = `en`, meta = [], title }: SeoProps) => {
+export default function Seo({
+  description = "",
+  lang = "fa",
+  meta = [],
+  title,
+}: SeoProps) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -31,35 +36,35 @@ const Seo = ({ description = ``, lang = `en`, meta = [], title }: SeoProps) => {
   )
 
   const metaDescription = description || site.siteMetadata.description
-  const defaultTitle = site.siteMetadata?.title
+  const siteTitle = site.siteMetadata.title
 
   const defaultMeta: Record<string, string>[] = [
     {
-      name: `description`,
+      name: "description",
       content: metaDescription,
     },
     {
-      property: `og:title`,
+      property: "og:title",
       content: title,
     },
     {
-      property: `og:description`,
+      property: "og:description",
       content: metaDescription,
     },
     {
-      property: `og:type`,
-      content: `website`,
+      property: "og:type",
+      content: "website",
     },
     {
-      name: `twitter:card`,
-      content: `summary`,
+      name: "twitter:card",
+      content: "summary",
     },
     {
-      name: `twitter:title`,
+      name: "twitter:title",
       content: title,
     },
     {
-      name: `twitter:description`,
+      name: "twitter:description",
       content: metaDescription,
     },
   ]
@@ -69,11 +74,9 @@ const Seo = ({ description = ``, lang = `en`, meta = [], title }: SeoProps) => {
       htmlAttributes={{
         lang,
       }}
-      title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      title={title || siteTitle}
+      titleTemplate={title ? `%s | ${siteTitle}` : undefined}
       meta={defaultMeta.concat(meta)}
     />
   )
 }
-
-export default Seo
