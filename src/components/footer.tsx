@@ -46,7 +46,7 @@ export default function footer() {
       <div className={classes.root}>
         <nav className={classes.navigation}>
           {config.menus.footer.map(item => {
-            return <Link to={item.to}>{item.name}</Link>
+            return <Link key={item.name} to={item.to}>{item.name}</Link>
           })}
         </nav>
       </div>
