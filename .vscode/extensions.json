@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "formulahendry.auto-complete-tag",
+    "formulahendry.auto-close-tag",
+    "steoates.autoimport",
+    "formulahendry.auto-rename-tag",
+    "coenraads.bracket-pair-colorizer-2",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "ionutvmi.path-autocomplete",
+    "esbenp.prettier-vscode",
+    "mrmlnc.vscode-scss"
+  ]
+}
