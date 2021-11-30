@@ -9,8 +9,6 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-window.moment = moment
-
 const useStyles = createUseStyles(
   {
     title: {
