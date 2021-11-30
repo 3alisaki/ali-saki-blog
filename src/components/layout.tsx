@@ -12,7 +12,13 @@ interface LayoutProps {
 
 const useStyles = createUseStyles(
   {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh",
+    },
     content: {
+      flex: 1,
       maxWidth: "50rem",
       width: "100%",
       boxSizing: "border-box",
@@ -41,7 +47,7 @@ export default function Layout({
   const isRootPath = pageProps?.location.pathname === rootPath
 
   return (
-    <>
+    <div className={classes.container}>
       <Helmet>
         <meta
           name="theme-color"
@@ -57,6 +63,6 @@ export default function Layout({
       <Header isRootPath={isRootPath} />
       <main className={classes.content}>{children}</main>
       <Footer />
-    </>
+    </div>
   )
 }
